@@ -16,7 +16,8 @@
           </ul>
 
           <div class="btn-row">
-            <button class="btn">Добавить в корзину</button>
+            <button class="btn" @click="addProductToCart(product)"
+            :disabled="!product.inventory">Добавить в корзину</button>
           </div>
         </div>
       </div>
@@ -25,21 +26,22 @@
 </template>
 
 <script>
-
-import shop from "@/api/shop.js"
+import {mapState, mapActions} from "vuex"
 
 export default {
   name: "ProductsView",
-
   data() {
     return {
-      products: []
     }
   },
 
-  async created() {
-    this.products = await shop.getProducts()
-  }
+  methods: {
+    ...mapActions(["addProductToCart"]),
+  },
+
+  computed: {
+    ...mapState(["products"]),
+  },
 }
 </script>
 

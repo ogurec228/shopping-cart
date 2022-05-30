@@ -61,8 +61,12 @@ h3 {
     transition: background-color 0.2s linear;
 }
 
-.btn:hover {
+.btn:not(.btn:disabled):hover {
     background-color: #345f81;
+}
+
+.btn:disabled {
+    opacity: 0.5;
 }
 
 /*
@@ -101,5 +105,55 @@ products
     display: flex;
     justify-content: center;
 }
+
+/*
+cart
+ */
+
+.cart {
+    padding: 80px 0;
+}
+
+.cart  h3 {
+    opacity: 0.7;
+    text-align: left;
+    font-size: 1.3rem;
+}
+
+.cart-products {
+    max-width: 400px;
+}
+
+.total-price {
+    display: flex;
+    gap: 15px;
+    font-size: 1.1rem;
+}
+
+.checkout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.order-status {
+    margin-top: 25px;
+    font-size: 1.1rem;
+}
+
+.order-successful {
+    color: green;
+}
+
+.order-error {
+    color: red;
+}
+
+
+
+
+
+
 
 

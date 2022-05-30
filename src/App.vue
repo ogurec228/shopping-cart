@@ -7,13 +7,27 @@
 
       <nav>
         <router-link :to="{name:'products'}">Продукты</router-link>
-        <router-link :to="'/'">Корзина</router-link>
+        <router-link :to="{name: 'cart'}">Корзина</router-link>
       </nav>
     </header>
   </div>
   <router-view/>
 
 </template>
+
+<script>
+import {mapActions} from "vuex";
+
+export default {
+  created() {
+    this.initProducts()
+  },
+
+  methods: {
+    ...mapActions(["initProducts"]),
+  },
+}
+</script>
 
 <style>
 * {

@@ -12,8 +12,12 @@ const routes = [
     redirect: {
       name: "products"
     }
-  }
-
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import("@/views/CartView.vue"),
+  },
 ]
 
 const router = createRouter({
