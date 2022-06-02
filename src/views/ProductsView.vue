@@ -5,45 +5,34 @@
         Продукты
       </h2>
 
-      <div class="grid">
-        <div class="card product"
-             v-for="product in products"
-             :key="product.id">
-          <h3>{{ product.title }}</h3>
-          <ul class="list">
-            <li><i>Цена:</i> {{product.price}}$</li>
-            <li><i>В наличии:</i> {{ product.inventory }} шт.</li>
-          </ul>
-
-          <div class="btn-row">
-            <button class="btn" @click="addProductToCart(product)"
-            :disabled="!product.inventory">Добавить в корзину</button>
-          </div>
-        </div>
-      </div>
+      <product-list
+      :products="products"></product-list>
     </div>
   </section>
 </template>
 
 <script>
-import {mapState, mapActions} from "vuex"
+
+import ProductList from "@/components/ProductList";
+import {mapState} from "vuex";
 
 export default {
   name: "ProductsView",
-  data() {
-    return {
-    }
-  },
 
-  methods: {
-    ...mapActions(["addProductToCart"]),
+  components: {
+    ProductList
   },
 
   computed: {
-    ...mapState(["products"]),
+    ...mapState("products", {
+      products: state => state.products
+    }),
   },
 }
 </script>
 
 <style scoped>
+.products {
+  padding: 80px 0;
+}
 </style>
