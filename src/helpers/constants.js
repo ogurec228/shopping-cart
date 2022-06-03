@@ -3,3 +3,4 @@ export const ORDER_STATUS = {
     NOT_COMPLETED: 0,
     ERROR: -1
 }
+

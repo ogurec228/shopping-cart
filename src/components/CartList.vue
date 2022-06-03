@@ -1,6 +1,6 @@
 <template>
     <ul class="list cart-products">
-      <li v-for="product in cartProducts"
+      <li v-for="product in products"
           :key="product.id">
         <i>{{ product.title }}</i>
         <span>{{ product.price }}$ x {{ product.amount }}</span>
@@ -13,7 +13,7 @@ export default {
   name: "CartList",
 
   props: {
-    cartProducts: {
+    products: {
       required: false,
       type: Array,
       default: []

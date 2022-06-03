@@ -8,7 +8,7 @@
 
     <div class="btn-row">
       <button class="btn"
-              @click="addProductToCart(product)"
+              @click="addToCart(product)"
               :disabled="!inStock">Добавить в корзину
       </button>
     </div>
@@ -30,7 +30,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("products",["addProductToCart"])
+    ...mapActions("products",["addToCart"])
   },
 
   computed: {

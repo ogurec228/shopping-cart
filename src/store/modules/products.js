@@ -3,35 +3,34 @@ import shop from "@/api/shop";
 //state
 const state = () => (
     {
-        products: [],
+        all: [],
     }
 );
 
 //mutations
 const mutations = {
     decreaseProductInventory(state, productId) {
-        state.products
+        state.all
             .find(item => item.id === productId).inventory--;
     },
 
     changeProducts(state, products) {
-        state.products = products;
+        state.all = products;
     }
 }
 
 //getters
 const getters = {
-
 };
 
 //actions
 const actions = {
-    addProductToCart({dispatch, commit, rootState}, product) {
-        let productInCart = rootState.cart.CartProducts
+    addToCart({dispatch, commit, rootState}, product) {
+        let productInCart = rootState.cart.products
             .find(item => item.id === product.id);
 
         if (productInCart) {
-            commit("cart/addAmountToProductInCart", productInCart.id, {root: true})
+            commit("cart/incrementProductAmount", productInCart.id, {root: true})
         } else {
             let initProductInCart = {
                 id: product.id,
@@ -39,7 +38,7 @@ const actions = {
                 price: product.price,
                 amount: 1,
             }
-            commit("cart/addProductToCart", initProductInCart, {root: true})
+            commit("cart/addProduct", initProductInCart, {root: true})
         }
         dispatch("decreaseProductInventory", product)
     },

@@ -25,7 +25,7 @@ export default {
 
   computed: {
     ...mapState("products", {
-      products: state => state.products
+      products: state => state.all
     }),
   },
 }

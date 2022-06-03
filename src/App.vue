@@ -13,20 +13,33 @@
   </div>
 
   <router-view/>
+
+  <notification-item
+      v-bind="notificationData"
+  ></notification-item>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
+import notificationItem from "@/components/NotificationItem";
 
 export default {
+  components: {
+    notificationItem
+  },
+
   created() {
     this.initProducts()
   },
 
   methods: {
-    ...mapActions("products", [
-      "initProducts"
-    ]),
+    ...mapActions("products", ["initProducts"]),
+  },
+
+  computed: {
+    ...mapState("notification", {
+      notificationData: "data"
+    })
   },
 }
 </script>

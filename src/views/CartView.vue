@@ -8,7 +8,7 @@
       <template
           v-if="isCartFull">
         <cart-list
-            :cart-products="CartProducts">
+            :products="products">
         </cart-list>
 
         <div class="checkout">
@@ -16,7 +16,7 @@
           <div class="row">
             <div class="total-price">
               <b>Total:</b>
-              {{ totalProductsPriceInCart }}$
+              {{ totalPrice }}$
             </div>
 
             <button class="btn" @click="checkout">Оформить заказ</button>
@@ -24,35 +24,59 @@
         </div>
       </template>
 
-
       <h3 v-else>...Корзина пуста</h3>
     </div>
-
   </section>
 </template>
 
 <script>
 import CartList from "@/components/CartList";
+import NotificationItem from "@/components/NotificationItem";
+
 import {mapState, mapGetters, mapActions} from "vuex"
+import {ORDER_STATUS} from "@/helpers/constants";
+
 
 export default {
   name: "CartView",
 
   components: {
-    CartList
+    CartList,
+    NotificationItem
   },
 
   computed: {
-    ...mapState("cart", ["CartProducts", "orderStatus"]),
-    ...mapGetters("cart", ["totalProductsPriceInCart"]),
+    ...mapState("cart", ["products", "orderStatus"]),
+    ...mapGetters("cart", ["totalPrice"]),
 
     isCartFull() {
-      return this.CartProducts.length > 0
+      return this.products.length > 0
     }
   },
 
   methods: {
-    ...mapActions("cart", ["checkout"])
+    ...mapActions("cart", ["checkout"]),
+    ...mapActions("notification", {
+      showNotification: "show"
+    }),
+  },
+
+  watch: {
+    "orderStatus": {
+      handler() {
+        if (this.orderStatus === ORDER_STATUS.ERROR) {
+          this.showNotification({
+            type: "error",
+            message: "Произошла ошибка при оформлении заказа! Попробуйте еще раз."
+          })
+        } else if (this.orderStatus === ORDER_STATUS.COMPLETED) {
+          this.showNotification({
+            type: "success",
+            message: "Заказ успешно оформлен!"
+          })
+        }
+      }
+    }
   }
 }
 </script>

@@ -1,20 +1,20 @@
-import {ORDER_STATUS} from "@/helpers/constants/orderConstants";
+import {ORDER_STATUS} from "@/helpers/constants";
 import shop from "@/api/shop";
 
 //state
 const state = () => ({
-    CartProducts: [],
+    products: [],
     orderStatus: ORDER_STATUS.NOT_COMPLETED
 });
 
 //mutations
 const mutations = {
-    addProductToCart(state, product) {
-        state.CartProducts.push(product)
+    addProduct(state, product) {
+        state.products.push(product)
     },
 
-    addAmountToProductInCart(state, productId) {
-        state.CartProducts
+    incrementProductAmount(state, productId) {
+        state.products
             .find(item => item.id === productId).amount++;
     },
 
@@ -22,15 +22,17 @@ const mutations = {
         state.orderStatus = orderStatus;
     },
 
-    clearCart(state) {
-        state.CartProducts = [];
+    changeProducts(state, products) {
+        state.products = products;
     },
 };
 
 //getters
 const getters = {
-    totalProductsPriceInCart(state) {
-        return state.CartProducts.reduce((prev, cur) => prev + (cur.price * cur.amount), 0)
+    totalPrice(state) {
+        return state.products
+            .reduce((prev, cur) => prev + (cur.price * cur.amount), 0)
+            .toFixed(2)
     }
 };
 
@@ -39,18 +41,18 @@ const actions = {
     async checkout({commit, dispatch}) {
         try {
             await shop.buyProducts();
-            commit("changeOrderStatus", ORDER_STATUS.COMPLETED)
-            dispatch("resetCart")
+            dispatch("changeOrderStatus", ORDER_STATUS.COMPLETED)
+            commit("changeProducts", [])
         } catch (error) {
-            commit("changeOrderStatus", ORDER_STATUS.ERROR)
+            dispatch("changeOrderStatus", ORDER_STATUS.ERROR)
         }
     },
 
-    resetCart({commit}) {
-        commit("clearCart")
+    changeOrderStatus({commit}, orderStatus) {
+        commit("changeOrderStatus", orderStatus)
         setTimeout(() => {
             commit("changeOrderStatus", ORDER_STATUS.NOT_COMPLETED)
-        }, 2000)
+        })
     }
 };
 
