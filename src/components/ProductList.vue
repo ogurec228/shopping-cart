@@ -5,21 +5,16 @@
                   :key="product.id"></product-item>
   </div>
 
-  <nav class="pagination">
-    <a href="#"
-       v-for="page in numberOfPages"
-       :key="page"
-       @click="setPage(page)"
-        :class="{
-         active: pagination.page === page
-        }">
-      {{ page }}
-    </a>
-  </nav>
+  <pagination-component
+      :number-of-pages="numberOfPages"
+      :active-page="pagination.page"
+      @set-page="setPage"
+  ></pagination-component>
 </template>
 
 <script>
 import ProductItem from "@/components/ProductItem";
+import PaginationComponent from "@/components/PaginationComponent";
 
 export default {
   name: "ProductList",
@@ -33,7 +28,8 @@ export default {
   },
 
   components: {
-    ProductItem
+    ProductItem,
+    PaginationComponent
   },
 
   data() {
@@ -62,26 +58,17 @@ export default {
     numberOfPages() {
       return Math.ceil(this.products.length / this.pagination.perPage)
     }
+  },
+
+  watch: {
+    "products": {
+      handler() {
+        this.pagination.page = 1;
+      },
+    }
   }
 }
 </script>
 
 <style scoped>
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  gap: 10px;
-}
-
-.pagination > a {
-  padding: 7px 12px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.pagination > a.active {
-  background-color: steelblue;
-  color: #fff;
-}
 </style>

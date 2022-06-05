@@ -130,6 +130,20 @@ h3 {
   opacity: 0.5;
 }
 
+/*input*/
+.input {
+  font-size: 0.9rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 8px;
+  outline: none;
+  transition: 0.2s linear box-shadow;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px steelblue;
+}
+
 /*
 header
  */
