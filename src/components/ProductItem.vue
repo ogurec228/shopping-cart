@@ -1,6 +1,6 @@
 <template>
   <div class="card product">
-    <h3>{{ product.title }}</h3>
+    <h3 v-html="product.title"></h3>
     <ul class="list">
       <li><i>Цена:</i> {{ product.price }}$</li>
       <li><i>В наличии:</i> {{ product.inventory }} шт.</li>
@@ -13,6 +13,7 @@
       </button>
     </div>
   </div>
+
 </template>
 
 <script>

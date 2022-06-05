@@ -144,6 +144,10 @@ h3 {
   box-shadow: 0 0 0 2px steelblue;
 }
 
+.mark {
+  background-color: rgba(70, 130, 180, 0.30);
+}
+
 /*
 header
  */

@@ -11,12 +11,10 @@
           <input type="text" class="input" placeholder="iPad 4 Mini"
                  v-model="searchStr">
         </div>
-
-
       </div>
 
       <product-list
-          :products="foundProducts"></product-list>
+          :products="highlightedProducts"></product-list>
     </div>
   </section>
 </template>
@@ -45,12 +43,25 @@ export default {
     }),
 
     foundProducts() {
-      return this.products.filter(product => {
-        let title = product.title.toLowerCase();
-        let search = this.searchStr.toLowerCase();
+      let search = this.searchStr.toLowerCase();
+      return this.products
+          .filter(product => {
+            let title = product.title.toLowerCase();
+            return title.includes(search)
+          })
+    },
 
-        return title.includes(search)
-      })
+    highlightedProducts() {
+      return this.foundProducts.map(product => {
+        product = {...product};
+
+        if (this.searchStr) {
+          let regexp = new RegExp(`${this.searchStr}`, "ig");
+          product.title = product.title.replace(regexp, "<span class='mark'>$&</span>")
+        }
+
+        return product;
+      });
     }
   },
 }

@@ -25,7 +25,9 @@ const getters = {
 
 //actions
 const actions = {
-    addToCart({dispatch, commit, rootState}, product) {
+    addToCart({dispatch, commit, rootState, state}, {id: productId}) {
+        let product = state.all.find(product => product.id === productId);
+
         let productInCart = rootState.cart.products
             .find(item => item.id === product.id);
 
